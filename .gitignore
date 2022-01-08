@@ -23,3 +23,7 @@
 hs_err_pid*
 
 *.iml
+
+target/
+pet-clinic-data/target
+pet-clinic-web/target
