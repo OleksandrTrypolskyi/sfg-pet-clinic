@@ -15,29 +15,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringJUnitWebConfig(classes = ControllerTestConfiguration.class)
-class IndexControllerTest {
-
-    @Configuration
-    @ComponentScan("guru.springframework.sfgpetclinic.controllers")
-    static class IndexControllerTestConfiguration {
-
-    }
+class VetControllerTest {
 
     @Autowired
-    private IndexController indexController;
+    private VetController vetController;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(vetController).build();
     }
 
     @Test
-    void index() throws Exception {
-        mockMvc.perform(get("/"))
+    void listVets() throws Exception {
+        mockMvc.perform(get("/vets"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasNoErrors())
-                .andExpect(view().name("index"));
+                .andExpect(view().name("vets/index"));
     }
 }
