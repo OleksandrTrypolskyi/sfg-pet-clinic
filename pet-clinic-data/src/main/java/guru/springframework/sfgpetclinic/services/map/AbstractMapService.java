@@ -33,7 +33,7 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
     }
 
     private Long getNextId() {
-        Long nextId;
+        Long nextId = null;
 
         try {
             nextId = Collections.max(map.keySet()) + 1;
