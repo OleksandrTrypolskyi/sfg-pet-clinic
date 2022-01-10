@@ -32,6 +32,7 @@ class VetControllerTest {
         mockMvc.perform(get("/vets"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasNoErrors())
+                .andExpect(model().attributeExists("vets"))
                 .andExpect(view().name("vets/index"));
     }
 }
