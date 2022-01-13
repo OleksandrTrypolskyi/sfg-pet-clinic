@@ -17,6 +17,6 @@ public class OwnerController {
     @GetMapping("/owners")
     public String listOwners(Model model) {
         model.addAttribute("owners", ownerService.findAll());
-        return "owners/index";
+        return "owners/ownersList";
     }
 }

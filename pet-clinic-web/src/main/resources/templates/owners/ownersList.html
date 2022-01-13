@@ -17,14 +17,17 @@
         </tr>
         </thead>
         <tbody>
-          <tr th:each="owner : ${selections}">
-              <td>
-                  <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a>
-              </td>
-              <td th:text="${owner.address}"/>
-              <td th:text="${owner.city}"/>
-              <td th:text="${owner.telephone}"/>
-              <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td>
+          <tr th:each="owner : ${owners}">
+              <td th:text="${owner.id}">1</td>
+              <td th:text="${owner.firstName}">1</td>
+              <td th:text="${owner.lastName}">1</td>
+<!--              <td>-->
+<!--                  <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a>-->
+<!--              </td>-->
+<!--              <td th:text="${owner.address}"/>-->
+<!--              <td th:text="${owner.city}"/>-->
+<!--              <td th:text="${owner.telephone}"/>-->
+<!--              <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td>-->
           </tr>
         </tbody>
     </table>
