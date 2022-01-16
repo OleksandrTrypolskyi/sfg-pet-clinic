@@ -1,13 +1,7 @@
 package guru.springframework.sfgpetclinic.controllers;
 
-import guru.springframework.sfgpetclinic.services.OwnerService;
-import guru.springframework.sfgpetclinic.services.PetService;
-import guru.springframework.sfgpetclinic.services.PetTypeService;
-import guru.springframework.sfgpetclinic.services.VetService;
-import guru.springframework.sfgpetclinic.services.map.OwnerServiceMap;
-import guru.springframework.sfgpetclinic.services.map.PetServiceMap;
-import guru.springframework.sfgpetclinic.services.map.PetTypeServiceMap;
-import guru.springframework.sfgpetclinic.services.map.VetServiceMap;
+import guru.springframework.sfgpetclinic.services.*;
+import guru.springframework.sfgpetclinic.services.map.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -45,7 +39,12 @@ public class ControllerTestConfiguration {
     }
 
     @Bean
-    VetService vetService() {
-        return new VetServiceMap();
+    VetService vetService(SpecialityService specialityService) {
+        return new VetServiceMap(specialityService);
+    }
+
+    @Bean
+    SpecialityService specialityService() {
+        return new SpecialityServiceMap();
     }
 }
