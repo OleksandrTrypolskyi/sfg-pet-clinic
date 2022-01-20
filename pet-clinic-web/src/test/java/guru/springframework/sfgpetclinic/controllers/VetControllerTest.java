@@ -29,7 +29,7 @@ class VetControllerTest {
 
     @Test
     void listVets() throws Exception {
-        mockMvc.perform(get("/vets"))
+        mockMvc.perform(get("/vets.html"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasNoErrors())
                 .andExpect(model().attributeExists("vets"))

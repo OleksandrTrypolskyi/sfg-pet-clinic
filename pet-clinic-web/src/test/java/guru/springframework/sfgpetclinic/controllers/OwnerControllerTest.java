@@ -32,6 +32,6 @@ class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasNoErrors())
                 .andExpect(model().attributeExists("owners"))
-                .andExpect(view().name("owners/index"));
+                .andExpect(view().name("owners/ownersList"));
     }
 }
