@@ -1,7 +1,11 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import guru.springframework.sfgpetclinic.services.VetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,17 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-@SpringJUnitWebConfig(classes = ControllerTestConfiguration.class)
+@ExtendWith(MockitoExtension.class)
 class VetControllerTest {
 
-    @Autowired
     private VetController vetController;
+    @Mock
+    private VetService vetService;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
+        vetController = new VetController(vetService);
         mockMvc = MockMvcBuilders.standaloneSetup(vetController).build();
     }
 

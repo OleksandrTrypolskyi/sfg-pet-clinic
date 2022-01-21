@@ -1,7 +1,11 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import guru.springframework.sfgpetclinic.services.OwnerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -13,16 +17,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringJUnitWebConfig(classes = ControllerTestConfiguration.class)
+@ExtendWith(MockitoExtension.class)
 class OwnerControllerTest {
 
-    @Autowired
     private OwnerController ownerController;
+
+    @Mock
+    private OwnerService ownerService;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
+        ownerController = new OwnerController(ownerService);
         mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
     }
 
