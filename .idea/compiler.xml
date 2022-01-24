@@ -12,7 +12,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="pet-clinic-data" target="17" />
+      <module name="pet-clinic-data" target="11" />
       <module name="pet-clinic-web" target="17" />
       <module name="sfg-pet-clinic" target="17" />
     </bytecodeTargetLevel>
