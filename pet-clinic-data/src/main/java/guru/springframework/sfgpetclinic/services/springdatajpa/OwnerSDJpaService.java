@@ -5,8 +5,10 @@ import guru.springframework.sfgpetclinic.repositories.OwnerRepository;
 import guru.springframework.sfgpetclinic.repositories.PetRepository;
 import guru.springframework.sfgpetclinic.repositories.PetTypeRepository;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +17,7 @@ import static java.util.stream.StreamSupport.stream;
 
 @Service
 @Profile("springdatajpa")
+@Slf4j
 public class OwnerSDJpaService implements OwnerService {
 
     private final OwnerRepository ownerRepository;
@@ -39,8 +42,16 @@ public class OwnerSDJpaService implements OwnerService {
     }
 
     @Override
+    @Transactional
     public Owner findById(Long id) {
-        return ownerRepository.findById(id).orElse(null);
+        final Owner owner = ownerRepository.findById(id).orElse(null);
+//        final Set<Pet> pets = stream(petRepository.findAll().spliterator(), false)
+//                .filter(pet -> pet.getOwner().getId().equals(owner.getId()))
+//                .collect(Collectors.toSet());
+//        owner.setPets(petReposiuptory.findPetsByOwner(owner));
+        owner.setPets(petRepository.findPetsByOwner_Id(owner.getId()));
+        log.info(owner.toString());
+        return owner;
     }
 
     @Override
