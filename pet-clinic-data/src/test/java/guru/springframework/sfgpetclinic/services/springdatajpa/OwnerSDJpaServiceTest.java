@@ -2,6 +2,7 @@ package guru.springframework.sfgpetclinic.services.springdatajpa;
 
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.repositories.OwnerRepository;
+import guru.springframework.sfgpetclinic.repositories.PetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,9 @@ class OwnerSDJpaServiceTest {
 
     @Mock
     private OwnerRepository ownerRepository;
+
+    @Mock
+    private PetRepository petRepository;
 
     private Owner owner;
 
@@ -58,6 +62,7 @@ class OwnerSDJpaServiceTest {
     @Test
     void findById() {
         when(ownerRepository.findById(anyLong())).thenReturn(Optional.of(owner));
+        when(petRepository.findPetsByOwner_Id(anyLong())).thenReturn(new HashSet<>());
         assertThat(service.findById(ID)).isNotNull();
     }
 

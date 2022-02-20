@@ -49,8 +49,10 @@ public class OwnerSDJpaService implements OwnerService {
 //                .filter(pet -> pet.getOwner().getId().equals(owner.getId()))
 //                .collect(Collectors.toSet());
 //        owner.setPets(petReposiuptory.findPetsByOwner(owner));
-        owner.setPets(petRepository.findPetsByOwner_Id(owner.getId()));
-        log.info(owner.toString());
+        if(owner != null) {
+            owner.setPets(petRepository.findPetsByOwner_Id(owner.getId()));
+            log.info(owner.toString());
+        }
         return owner;
     }
 
