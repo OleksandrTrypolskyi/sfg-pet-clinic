@@ -14,6 +14,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "pets")
+@ToString(exclude = "owner")
 public class Pet extends BaseEntity {
     @Column(name = "name")
     private String name;
@@ -25,6 +26,6 @@ public class Pet extends BaseEntity {
     private Owner owner;
     @Column(name = "birth_date")
     private LocalDate birthDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
     private Set<Visit> visits = new HashSet<>();
 }
