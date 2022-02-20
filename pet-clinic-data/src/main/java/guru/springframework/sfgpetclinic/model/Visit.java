@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "pet")
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
