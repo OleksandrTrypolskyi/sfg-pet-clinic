@@ -11,10 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -39,8 +36,8 @@ class OwnerControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
         owners = new HashSet<>();
-        owners.add(Owner.builder().id(1L).build());
-        owners.add(Owner.builder().id(2L).build());
+        owners.add(Owner.builder().id(1L).lastName("firstLastName").build());
+        owners.add(Owner.builder().id(2L).lastName("secondLastName").build());
     }
 
 //    @Test
@@ -69,20 +66,33 @@ class OwnerControllerTest {
 
     @Test
     void processFindFormReturnMany() throws Exception {
-        when(ownerService.findByLastNameLike(anyString()))
+        when(ownerService.findByLastNameContainingIgnoreCase(anyString()))
                 .thenReturn(new ArrayList<>(owners));
 
-        mockMvc.perform(get("/owners"))
+        mockMvc.perform(get("/owners")
+                        .param("lastName", "lastName "))
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/ownersList"))
                 .andExpect(model().attribute("owners", hasSize(2)));
     }
 
     @Test
-    void processFindFormReturnOne() throws Exception {
-        when(ownerService.findByLastNameLike(anyString())).thenReturn(Arrays.asList(Owner.builder().id(1L).build()));
+    void processFindFormEmptyReturnMany() throws Exception {
+        mockMvc.perform(get("/owners")
+                .param("lastName", ""))
+                .andExpect(model().attributeHasErrors())
+                .andExpect(model().attributeDoesNotExist("owners"))
+                .andExpect(view().name("owners/findOwners"));
+        verifyNoInteractions(ownerService);
+    }
 
-        mockMvc.perform(get("/owners"))
+    @Test
+    void processFindFormReturnOne() throws Exception {
+        when(ownerService.findByLastNameContainingIgnoreCase(anyString()))
+                .thenReturn(List.of(Owner.builder().id(1L).lastName("lastName").build()));
+
+        mockMvc.perform(get("/owners")
+                        .param("lastName", "first"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/owners/1"));
     }
@@ -100,4 +110,6 @@ class OwnerControllerTest {
 
         verify(ownerService, times(1)).findById(anyLong());
     }
+
+
 }

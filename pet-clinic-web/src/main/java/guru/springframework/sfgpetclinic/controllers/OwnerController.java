@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -35,9 +36,14 @@ public class OwnerController {
 
     @GetMapping("/owners")
     public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
-        if (owner.getLastName() == null) owner.setLastName("");
+        final List<Owner> owners;
 
-        final List<Owner> owners = ownerService.findByLastNameLike("%" + owner.getLastName() + "%");
+        if(owner.getLastName() == null || owner.getLastName().equals("")) {
+            owners = Collections.emptyList();
+        } else {
+            owners = ownerService.findByLastNameContainingIgnoreCase(owner.getLastName());
+        }
+//        final List<Owner> owners = ownerService.findByLastNameLike("%" + owner.getLastName() + "%");
 
         if(owners.isEmpty()) {
             bindingResult.rejectValue("lastName", "notFound", "not found");
