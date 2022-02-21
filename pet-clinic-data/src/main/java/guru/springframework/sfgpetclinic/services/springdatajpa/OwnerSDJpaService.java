@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class OwnerSDJpaService implements OwnerService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Owner findById(Long id) {
         final Owner owner = ownerRepository.findById(id).orElse(null);
 //        final Set<Pet> pets = stream(petRepository.findAll().spliterator(), false)
@@ -69,5 +70,11 @@ public class OwnerSDJpaService implements OwnerService {
     @Override
     public void deleteById(Long id) {
         ownerRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Owner> findByLastNameLike(String lastName) {
+        return ownerRepository.findByLastNameContainingIgnoreCase(lastName);
     }
 }
