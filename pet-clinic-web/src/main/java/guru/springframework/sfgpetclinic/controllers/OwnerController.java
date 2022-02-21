@@ -37,7 +37,7 @@ public class OwnerController {
     public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
         if (owner.getLastName() == null) owner.setLastName("");
 
-        final List<Owner> owners = ownerService.findByLastNameLike(owner.getLastName());
+        final List<Owner> owners = ownerService.findByLastNameLike("%" + owner.getLastName() + "%");
 
         if(owners.isEmpty()) {
             bindingResult.rejectValue("lastName", "notFound", "not found");

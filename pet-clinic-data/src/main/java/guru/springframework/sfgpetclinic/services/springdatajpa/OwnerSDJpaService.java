@@ -75,6 +75,6 @@ public class OwnerSDJpaService implements OwnerService {
     @Override
     @Transactional(readOnly = true)
     public List<Owner> findByLastNameLike(String lastName) {
-        return ownerRepository.findByLastNameContainingIgnoreCase(lastName);
+        return ownerRepository.findByLastNameLike(lastName);
     }
 }
