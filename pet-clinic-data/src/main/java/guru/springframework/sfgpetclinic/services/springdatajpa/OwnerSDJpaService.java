@@ -52,7 +52,6 @@ public class OwnerSDJpaService implements OwnerService {
 //        owner.setPets(petReposiuptory.findPetsByOwner(owner));
         if(owner != null) {
             owner.setPets(petRepository.findPetsByOwner_Id(owner.getId()));
-            log.info(owner.toString());
         }
         return owner;
     }
